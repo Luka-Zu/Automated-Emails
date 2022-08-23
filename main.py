@@ -21,6 +21,13 @@ url = "https://newsapi.org/v2/everything?" \
 
 response = requests.get(url)
 content = response.json()
-x = content['articles']
-print(x)
+articles = content['articles']
+# print(x)
 # pprint(content)
+
+
+email_body = ''
+for article in articles:
+    email_body = email_body + article['title'] + '\n' + article['url'] + '\n\n'
+
+print(email_body)
