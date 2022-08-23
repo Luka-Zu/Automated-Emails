@@ -1,0 +1,6 @@
+# Automated-Emails
+An app that reads user names, email addresses, and interests from an Excel file and sends an email to each user
+with news feeds about the user's interest every night.
+
+
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
