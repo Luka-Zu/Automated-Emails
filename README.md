@@ -3,4 +3,5 @@ An app that reads user names, email addresses, and interests from an Excel file 
 with news feeds about the user's interest every night.
 
 
-![alt text](https://github.com/Luka-Zu/Automated-Emails/blob/origin/demo.jpg?raw=true)
+![Alt text](demo.jpg?raw=true "Title")
+
