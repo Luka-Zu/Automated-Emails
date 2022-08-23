@@ -1,63 +1,34 @@
-# 9646d008451e4212b437cb0f9805d16d
-# dhzhgwyte@emltmp.com
-# 9h8e6wcd@freeml.net
-import requests
-from pprint import pprint
+import smtplib
+import time
+import pandas
+from news import NewsFeed
+import datetime
 
 
-class NewsFeed:
-    """
-        Representing multiple news titles and links as a single string
-    """
-    base_url = "https://newsapi.org/v2/everything?"
-    api_key = "9646d008451e4212b437cb0f9805d16d"
+while True:
+    if datetime.datetime.now().hour == 23 and datetime.datetime.now().minute == 59:
+        df = pandas.read_excel('people.xlsx')
 
-    def __init__(self, interest, from_date, to_date, language):
-        self.language = language
-        self.to_date = to_date
-        self.from_date = from_date
-        self.interest = interest
+        for index, row in df.iterrows():
 
-    def get(self):
-        url = f"{self.base_url}" \
-              f"qInTitle={self.interest}&" \
-              f"from={self.from_date}&" \
-              f"to={self.to_date}&" \
-              f"language={self.language}&" \
-              f"apiKey={self.api_key}"
+            date_string = datetime.datetime.now().strftime('%y-%m-%d')
+            news_feed = NewsFeed(interest=row['interest'],
+                                 from_date=date_string,
+                                 to_date=date_string)
 
-        response = requests.get(url)
-        content = response.json()
-        articles = content['articles']
-        # print(x)
-        # pprint(content)
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            server.login(user="zukhbaialuka0@gmail.com", password="incorrect_password")
 
-        email_body = ''
-        for article in articles:
-            email_body = email_body + article['title'] + '\n' + article['url'] + '\n\n'
+            message = f"Hi {row['name']}\n" \
+                      f"See today's news about {row['interest']}" \
+                      f"{news_feed.get()}"
+                # .replace(u"\u2018", "'").replace(u"\u2013", "'").replace(u"\u2019", "'").replace(
+                # u"\u2014", "'").replace(u"\u2015", "'").replace(u"\u2020", "'").replace(u"\u201c", "'").replace(u"\u201d", "'")
 
-        return email_body
+            server.sendmail(from_addr="zukhbaialuka0@gmail.com",
+                            to_addrs=row['email'],
+                            msg=message)
+            server.quit()
+        time.sleep(60)
 
-
-new_feed = NewsFeed("tesla", "2022-07-23", "2022-07-23", "en")
-print(new_feed.get())
-
-# url = "https://newsapi.org/v2/everything?" \
-#       "qInTitle=tesla&" \
-#       "from=2022-07-23&" \
-#       "to=2022-07-23&" \
-#       "language=en&" \
-#       "apiKey=9646d008451e4212b437cb0f9805d16d"
-#
-# response = requests.get(url)
-# content = response.json()
-# articles = content['articles']
-# # print(x)
-# # pprint(content)
-#
-#
-# email_body = ''
-# for article in articles:
-#     email_body = email_body + article['title'] + '\n' + article['url'] + '\n\n'
-#
-# print(email_body)
+# FUCK yagmail library !
