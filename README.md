@@ -3,5 +3,5 @@ An app that reads user names, email addresses, and interests from an Excel file 
 with news feeds about the user's interest every night.
 
 
-![Alt text](demo.jpg?raw=true "Title")
+![Alt text](demo.png?raw=true "Title")
 
